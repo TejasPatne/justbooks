@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Upload } from "@aws-sdk/lib-storage";
 import { S3Client } from "@aws-sdk/client-s3";
 import axios from 'axios'
+import toast, {Toaster} from "react-hot-toast";
 import './Uploader.css'
 
 const Uploader = () => { 
@@ -19,32 +20,41 @@ const Uploader = () => {
   })
 
   const upload = (file) => {
-    var filedata = file.target.files[0];
+    var file = file.target.files[0];
+    const refresh = toast.loading("Uploading book...");
     const creds = {
       accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY 
     }
-    // console.log(creds);
+
     try {
       const parallelUploads3 = new Upload({
         client: new S3Client({ region: "ap-south-1", credentials: creds }),
-        params: { Bucket: "direct-upload-from-frontend", Key: filedata.name, Body: filedata },
+        params: { Bucket: "direct-upload-from-frontend", Key: file.name, Body: file },
         leavePartsOnError: false,
       });
 
       parallelUploads3.on("httpUploadProgress", (progress) => {
         console.log(progress);
       });
-
+      
       parallelUploads3.done();
+
+      toast.success("Book added to bucket! click on upload!", {
+        id: refresh,
+      });
+      
     } catch (e) {
       console.log(e);
+      toast.error(e, {
+        id: refresh,
+      });
     }
 
     const newData={...data}
     newData["link"]=file.name
     setData(newData)
-    console.log(newData)
+    // console.log(newData)
   }
 
   function handle(e){
@@ -56,6 +66,7 @@ const Uploader = () => {
 
   const formSubmitHandler= async (e)=>{
     e.preventDefault();
+    const refresh = toast.loading("Uploading book...");
     if(data["link"]===""){
       setIsLinkPresent(false);
     }
@@ -82,8 +93,14 @@ const Uploader = () => {
             //handle error
             console.log(response);
           });
+          toast.success("Book uploaded successfully!", {
+            id: refresh,
+          });
       } catch (error) {
         console.log(error);
+        toast.error(error, {
+          id: refresh,
+        });
       }
     }
     
@@ -100,7 +117,8 @@ const Uploader = () => {
         <input onChange={e=>handle(e)} id='description' value={data.description} placeholder='book description' type="text" />
         <input onChange={e=>handle(e)} id='coverpage' value={data.coverpage} placeholder='book coverpage link' type="text"/>
         <input type="file" onChange={upload} />
-        <button>Upload</button>
+        <button className='primary-button'>Upload</button>
+        <Toaster/>
       </form>
     </div>
   )
