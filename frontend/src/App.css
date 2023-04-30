@@ -1,0 +1,277 @@
+* {
+  color: white;
+  margin: 0;
+  padding: 0;
+  transition: all 400ms ease;
+}
+
+body {
+  background-color: #282c34;
+  overflow-x: hidden;
+}
+
+/* #docForm{
+  font: 1.5rem;
+}
+
+.button-type-1{
+  padding: 1rem;
+  font: 1.5rem;
+  border-radius: 3px;
+} */
+
+.content {
+  padding-top: 5rem;
+}
+
+/* .upload-container{
+  padding: 5rem;
+  margin: 15rem auto;
+  width: 30%;
+  text-align: center;
+  border: 2px solid white;
+  border-radius: 3px;
+} */
+
+button {
+  background-color: #d33349;
+}
+
+.Navbar {
+  background-color: #d33349;
+  position: fixed;
+  z-index: 999;
+  float: top;
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) 4fr;
+  padding: 1rem 2rem;
+  transition: all 400ms ease;
+  width: 100%;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.Navbar.active {
+  position: absolute;
+  background: transparent;
+  z-index: 999;
+  top: 0;
+  width: 100%;
+}
+
+.nav-1 {
+  margin-left: 1rem;
+}
+
+.nav-2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1.5rem;
+  align-self: right;
+}
+
+.nav-2 a {
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.nav-2 button{
+  font-weight: bold;
+  background-color: #d33348;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 2rem;
+  border-color: transparent;
+}
+.poster-info button {
+  text-decoration: none;
+  font-size: 0.8rem;
+  padding: 1rem;
+  border-radius: 2rem;
+  background-color: red;
+}
+
+.nav-2 button:hover {
+  background-color: #282c34;
+}
+
+.poster {
+  display: flex;
+  background-color: rgba(116, 116, 115, 0.15);
+  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url(https://helios-i.mashable.com/imagery/articles/02wTikGJ5ibx559DJk5xNWU/hero-image.fill.size_1248x702.v1623389209.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 80vh;
+  padding: 10% 10%;
+  font-size: 2rem;
+}
+
+
+.poster-info {
+  background: transparent;
+}
+
+.bestseller {
+  margin: 2% 5%;
+}
+
+.bestseller-1 {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: rgb(248, 82, 82);
+  border-radius: 0.5rem;
+  width: max-content;
+  padding: 0.2rem;
+  text-decoration: underline;
+  text-underline-offset: 7px;
+}
+
+.bestseller-2 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 2.5rem;
+  row-gap: 5rem;
+  justify-content: space-between;
+}
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  font-size: 0.7rem;
+  text-align: left;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.book-card img {
+  height: 37vmin;
+}
+
+.book-card .book-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  line-height: 1.5rem;
+}
+
+.book-card button {
+  cursor: pointer;
+  border-radius: 2rem;
+  padding: 0.5rem;
+  transition: all 300ms ease-in-out;
+  width: 100%;
+}
+
+.poster-info button {
+  margin-top: 5rem;
+  width: 10rem;
+  font-size: 1rem;
+}
+
+.poster-info button:hover {
+  cursor: pointer;
+}
+
+.poster-info span {
+  color: rgb(255, 104, 104);
+}
+
+.book-card button:hover {
+  background-color: rgb(75, 202, 66);
+  transform: scale(1.1);
+}
+
+@media only screen and (max-width: 600px) {
+  .poster {
+    font-size: 1rem;
+  }
+
+  .content {
+    padding-top: 6rem;
+  }
+
+  .nav-1 h1 {
+    font-size: 1rem;
+  }
+
+  .nav-2 a {
+    font-size: 0.8rem;
+  }
+
+  .extra-div {
+    display: none;
+  }
+
+  .Navbar {
+    padding: 1rem 1rem;
+  }
+
+  .Navbar button {
+    display: none;
+  }
+
+  .nav-1 {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+    margin-left: 0;
+  }
+
+  .nav-2 {
+    gap: 0.5rem;
+  }
+
+  .nav-2 button,
+  .poster-info button {
+    padding: 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.5rem;
+  }
+
+  .bestseller {
+    margin: 0.5rem;
+  }
+
+  .book-card {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  .book-card h2 {
+    font-size: 1rem;
+  }
+
+  .book-card p {
+    font-size: 0.8rem;
+  }
+
+  .book-card img {
+    height: 25vh;
+
+  }
+
+  .bestseller-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    justify-content: space-between;
+  }
+  .poster{
+    padding-top: 50%;
+  }
+  .poster-info button{
+    font-size: 0.8rem;
+  }
+}
