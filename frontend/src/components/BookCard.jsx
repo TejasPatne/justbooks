@@ -13,7 +13,9 @@ const BookCard = ({coverimage, bookname, author, edition, booklink}) => {
             <p>Edition: {bookEdition}</p>
             <p>Author: {bookAuthor}</p>
         </div>
-        <a href={`${process.env.REACT_APP_OAC}/${booklink}`}><button>Download</button></a>
+        <a href={`${process.env.REACT_APP_OAC}/${booklink}`}>
+          <button className='secondary-button'>Download</button>
+          </a>
     </div>
   )
 }

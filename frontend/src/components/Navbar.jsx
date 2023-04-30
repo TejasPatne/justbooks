@@ -11,7 +11,7 @@ const Navbar = () => {
   }
   window.addEventListener('scroll',changeBackground)
   return (
-    <div className={navbar?'Navbar active': 'Navbar'}>
+    <div className={`navbar ${navbar?'active': ''}`}>
         <div className='nav-1'>
             <h1>Justbooks</h1>
         </div>
@@ -19,11 +19,11 @@ const Navbar = () => {
         <div className='extra-div'></div>
         <div className='extra-div'></div>
         <div className='nav-2'>
-            <Link to="/">Home</Link>
-            <Link to="/novels">Novels</Link>
-            <Link to="/study">Study</Link>
-            <Link to="/comics">Comics</Link>
-            <button>Login / SignUp</button>
+            <Link className='navbar-link' to="/">Home</Link>
+            <Link className='navbar-link' to="/novels">Novels</Link>
+            <Link className='navbar-link' to="/study">Study</Link>
+            <Link className='navbar-link' to="/comics">Comics</Link>
+            <button className='secondary-button'>Login / SignUp</button>
         </div>
     </div>
   )

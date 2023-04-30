@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Upload } from "@aws-sdk/lib-storage";
-import { S3Client, S3 } from "@aws-sdk/client-s3";
+import { S3Client } from "@aws-sdk/client-s3";
 import axios from 'axios'
 import './Uploader.css'
 
@@ -19,7 +19,7 @@ const Uploader = () => {
   })
 
   const upload = (file) => {
-    var file = file.target.files[0];
+    var filedata = file.target.files[0];
     const creds = {
       accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY 
@@ -28,7 +28,7 @@ const Uploader = () => {
     try {
       const parallelUploads3 = new Upload({
         client: new S3Client({ region: "ap-south-1", credentials: creds }),
-        params: { Bucket: "direct-upload-from-frontend", Key: file.name, Body: file },
+        params: { Bucket: "direct-upload-from-frontend", Key: filedata.name, Body: filedata },
         leavePartsOnError: false,
       });
 
@@ -56,7 +56,7 @@ const Uploader = () => {
 
   const formSubmitHandler= async (e)=>{
     e.preventDefault();
-    if(data["link"]==""){
+    if(data["link"]===""){
       setIsLinkPresent(false);
     }
     else{

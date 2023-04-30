@@ -17,9 +17,10 @@ const Study = () => {
   useEffect(()=>{
     getBooks()
   },[])
+
   return (
-    <div className='bestseller dark-background content'>
-        <div className='bestseller-2'>
+    <div className='explore-sec dark-background content'>
+        <div className='books-sec'>
             {bookList && bookList.map((book, index)=>
                 book.category==="study" ? <BookCard key={index} coverimage={book.coverpage} bookname={book.name} author={book.author} edition={book.edition} booklink={book.link}  /> : null
             )}

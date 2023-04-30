@@ -10,7 +10,9 @@ const HomePoster = () => {
             <div>
                 <p><span>Not sure what to read next?</span> Explore our catalog of public domain books with our editors.</p>
             </div>
-            <a href="#popular-books"><button>Explore</button></a>
+            <a href="#popular-books">
+              <button className='primary-button'>Explore</button>
+            </a>
         </div>
     </div>
   )

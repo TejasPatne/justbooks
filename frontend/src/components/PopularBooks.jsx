@@ -20,9 +20,9 @@ const PopularBooks = () => {
   return (
     <div className='main-content'>
       <HomePoster />
-      <div className='bestseller'>
-        <div className='bestseller-1' id='popular-books'>Popular Books</div>
-        <div className='bestseller-2'>
+      <div className='explore-sec'>
+        <div className='subheading-1' id='popular-books'>Popular Books</div>
+        <div className='books-sec'>
           {bookList && bookList.map((book, index) =>
             <BookCard key={index} coverimage={book.coverpage} bookname={book.name} author={book.author} edition={book.edition} booklink={book.link} />
           )}
