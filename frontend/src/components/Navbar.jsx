@@ -20,9 +20,10 @@ const Navbar = () => {
         <div className='extra-div'></div>
         <div className='nav-2'>
             <Link className='navbar-link' to="/">Home</Link>
-            <Link className='navbar-link' to="/novels">Novels</Link>
+            {/* <Link className='navbar-link' to="/novels">Novels</Link> */}
             <Link className='navbar-link' to="/study">Study</Link>
             <Link className='navbar-link' to="/comics">Comics</Link>
+            <Link className='navbar-link' to="/uploader">Upload</Link>
             <button className='secondary-button'>Login / SignUp</button>
         </div>
     </div>
