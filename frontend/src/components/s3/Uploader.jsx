@@ -9,9 +9,7 @@ import './Uploader.css'
 const Uploader = () => {
 
   const navigate = useNavigate();
-
   const [isLinkPresent, setIsLinkPresent] = useState(true);
-
   const [data, setData] = useState({
     name: "",
     category: "",
@@ -31,6 +29,7 @@ const Uploader = () => {
     }
 
     try {
+      
       const parallelUploads3 = new Upload({
         client: new S3Client({ region: "ap-south-1", credentials: creds }),
         params: { Bucket: "direct-upload-from-frontend", Key: file.name, Body: file },
@@ -62,27 +61,31 @@ const Uploader = () => {
       }
 
     } catch (e) {
+
       console.log(e);
       toast.error(e, {
         id: refresh,
       });
+
     }
 
     const newData = { ...data }
     newData["link"] = file.name
     setData(newData)
-    // console.log(newData)
+
   }
 
   function handle(e) {
+
     const newData = { ...data }
     newData[e.target.id] = e.target.value
     setData(newData)
     console.log(newData)
+    
   }
 
   const formSubmitHandler = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const refresh = toast.loading("Uploading book...");
     if (data["link"] === "") {
       setIsLinkPresent(false);

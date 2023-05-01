@@ -1,22 +1,10 @@
-import React, { useEffect, useState }  from 'react'
+import React, { useContext } from 'react'
 import BookCard from './BookCard'
-import axios from 'axios'
+import { bookListContext } from '../App'
 
 const Study = () => {
-  const [bookList, setBookList] = useState([]);
-  const getBooks = async () => {
-    try {
-      const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/books`)
-      setBookList(data.books);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
-
-  useEffect(()=>{
-    getBooks()
-  },[])
+  const bookList = useContext(bookListContext)
 
   return (
     <div className='explore-sec dark-background content'>
