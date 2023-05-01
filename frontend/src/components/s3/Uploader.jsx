@@ -33,7 +33,7 @@ const Uploader = () => {
         params: { Bucket: "direct-upload-from-frontend", Key: file.name, Body: file },
         leavePartsOnError: false,
       });
-
+      
       parallelUploads3.on("httpUploadProgress", (progress) => {
         console.log(progress);
       });

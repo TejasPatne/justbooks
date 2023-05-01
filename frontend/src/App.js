@@ -9,10 +9,9 @@ import Uploader from './components/s3/Uploader';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App dark-background">
       <BrowserRouter>
         <Navbar />
-        <div className='dark-background'>
         <Routes>
           <Route path='/' element={<PopularBooks/>} />
           <Route path='/novels' element={<Novels/>} />
@@ -20,7 +19,6 @@ function App() {
           <Route path='/comics' element={<Comics/>} />
           <Route path='/uploader' element={<Uploader/>} />
         </Routes>
-        </div>
       </BrowserRouter>
     </div>
   );
