@@ -1,21 +1,24 @@
 import React, { useState } from 'react'
 import { Upload } from "@aws-sdk/lib-storage";
 import { S3Client } from "@aws-sdk/client-s3";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios'
-import toast, {Toaster} from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import './Uploader.css'
 
-const Uploader = () => { 
+const Uploader = () => {
+
+  const navigate = useNavigate();
 
   const [isLinkPresent, setIsLinkPresent] = useState(true);
 
-  const [data, setData]=useState({
+  const [data, setData] = useState({
     name: "",
     category: "",
     author: "",
     edition: "",
     description: "desc",
-    link:"",
+    link: "",
     coverpage: ""
   })
 
@@ -24,7 +27,7 @@ const Uploader = () => {
     const refresh = toast.loading("Uploading book...");
     const creds = {
       accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY 
+      secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
     }
 
     try {
@@ -33,17 +36,31 @@ const Uploader = () => {
         params: { Bucket: "direct-upload-from-frontend", Key: file.name, Body: file },
         leavePartsOnError: false,
       });
-      
+
       parallelUploads3.on("httpUploadProgress", (progress) => {
         console.log(progress);
       });
-      
-      parallelUploads3.done();
 
-      toast.success("Book added to bucket! click on upload!", {
-        id: refresh,
-      });
-      
+      const fileSizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+
+      if (fileSizeInMB > 5) {
+        toast.error(`File size is too large ${(file.size / (1024 * 1024)).toFixed(2)} MB`, {
+          id: refresh,
+        });
+      }
+      else {
+
+        parallelUploads3.done();
+
+        parallelUploads3.on("success", function(response){
+          toast.success("Book added to bucket! click on upload!", {
+            id: refresh,
+          });
+          console.log(response);
+        })
+
+      }
+
     } catch (e) {
       console.log(e);
       toast.error(e, {
@@ -51,31 +68,31 @@ const Uploader = () => {
       });
     }
 
-    const newData={...data}
-    newData["link"]=file.name
+    const newData = { ...data }
+    newData["link"] = file.name
     setData(newData)
     // console.log(newData)
   }
 
-  function handle(e){
-    const newData={...data}
-    newData[e.target.id]=e.target.value
+  function handle(e) {
+    const newData = { ...data }
+    newData[e.target.id] = e.target.value
     setData(newData)
     console.log(newData)
   }
 
-  const formSubmitHandler= async (e)=>{
+  const formSubmitHandler = async (e) => {
     e.preventDefault();
     const refresh = toast.loading("Uploading book...");
-    if(data["link"]===""){
+    if (data["link"] === "") {
       setIsLinkPresent(false);
     }
-    else{
+    else {
       setIsLinkPresent(true);
-      data["coverpage"]  = data["coverpage"]!==""? data["coverpage"] : `${process.env.REACT_APP_DEFAULT_COVERPAGE}` ;
-      data["author"]  = data["author"]!==""? data["author"] : "unknown";
-      data["category"]  = data["category"]!==""? data["category"] : "unknown";
-      data["edition"]  = data["edition"]!==""? data["edition"] : "unknown";
+      data["coverpage"] = data["coverpage"] !== "" ? data["coverpage"] : `${process.env.REACT_APP_DEFAULT_COVERPAGE}`;
+      data["author"] = data["author"] !== "" ? data["author"] : "unknown";
+      data["category"] = data["category"] !== "" ? data["category"] : "unknown";
+      data["edition"] = data["edition"] !== "" ? data["edition"] : "unknown";
       try {
         // await axios.post(`${process.env.REACT_APP_BACKEND_URL}/book/new`, data).then(res=>console.log(res.data))
         console.log("request started...")
@@ -87,15 +104,17 @@ const Uploader = () => {
         })
           .then(function (response) {
             //handle success
-            console.log("res:",response);
+            console.log("res:", response);
           })
           .catch(function (response) {
             //handle error
             console.log(response);
           });
-          toast.success("Book uploaded successfully!", {
-            id: refresh,
-          });
+        toast.success("Book uploaded successfully!", {
+          id: refresh,
+        });
+        navigate("/");
+
       } catch (error) {
         console.log(error);
         toast.error(error, {
@@ -103,22 +122,22 @@ const Uploader = () => {
         });
       }
     }
-    
+
   }
 
   return (
     <div className='div1'>
       {!isLinkPresent && <p>Upload the book first</p>}
-      <form onSubmit={e=>formSubmitHandler(e)}>
-        <input onChange={e=>handle(e)} id='name' value={data.name} placeholder='book name' type="text" required/>
-        <input onChange={e=>handle(e)} id='category' value={data.category} placeholder='book category' type="text" />
-        <input onChange={e=>handle(e)} id='author' value={data.author} placeholder='book author' type="text" />
-        <input onChange={e=>handle(e)} id='edition' value={data.edition} placeholder='book edition' type="text" />
-        <input onChange={e=>handle(e)} id='description' value={data.description} placeholder='book description' type="text" />
-        <input onChange={e=>handle(e)} id='coverpage' value={data.coverpage} placeholder='book coverpage link' type="text"/>
+      <form onSubmit={e => formSubmitHandler(e)}>
+        <input onChange={e => handle(e)} id='name' value={data.name} placeholder='book name' type="text" required />
+        <input onChange={e => handle(e)} id='category' value={data.category} placeholder='book category' type="text" />
+        <input onChange={e => handle(e)} id='author' value={data.author} placeholder='book author' type="text" />
+        <input onChange={e => handle(e)} id='edition' value={data.edition} placeholder='book edition' type="text" />
+        <input onChange={e => handle(e)} id='description' value={data.description} placeholder='book description' type="text" />
+        <input onChange={e => handle(e)} id='coverpage' value={data.coverpage} placeholder='book coverpage link' type="text" />
         <input type="file" onChange={upload} />
         <button className='primary-button'>Upload</button>
-        <Toaster/>
+        <Toaster />
       </form>
     </div>
   )
