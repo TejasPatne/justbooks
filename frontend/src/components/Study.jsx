@@ -27,8 +27,7 @@ const Counter = () => {
 
 const Study = () => {
 
-  // const bookList = useContext(bookListContext)
-  const bookList = false;
+  const bookList = useContext(bookListContext)
 
   return (
     <div className='explore-sec dark-background content'>
