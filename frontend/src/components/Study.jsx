@@ -27,16 +27,18 @@ const Counter = () => {
 
 const Study = () => {
 
-  const bookList = useContext(bookListContext)
+  const bookList = useContext(bookListContext);
 
   return (
     <div className='explore-sec dark-background content'>
         <div className='books-sec'>
-            {bookList? bookList.map((book, index)=>
-                book.category==="study" ? <BookCard key={index} coverimage={book.coverpage} bookname={book.name} author={book.author} edition={book.edition} booklink={book.link}  /> : null
+          {
+            bookList.length !==0 ?
+            bookList.map((book, index)=>
+              book.category==="study" ? <BookCard key={index} coverimage={book.coverpage} bookname={book.name} author={book.author} edition={book.edition} booklink={book.link}  /> : null
             ):
             Counter()
-            }
+          }
         </div>
     </div>
   )

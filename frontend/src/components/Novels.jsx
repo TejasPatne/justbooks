@@ -32,10 +32,12 @@ const Novels = () => {
   return (
     <div className='explore-sec dark-background content'>
         <div className='books-sec'>
-            {bookList? bookList.map((book, index)=>
-                book.category==="novel" ? <BookCard key={index} coverimage={book.coverpage} bookname={book.name} author={book.author} edition={book.edition} booklink={book.link}  /> : null
-            ):
-            Counter()
+            {
+              bookList.length !==0 ?
+              bookList.map((book, index)=>
+                  book.category==="novel" ? <BookCard key={index} coverimage={book.coverpage} bookname={book.name} author={book.author} edition={book.edition} booklink={book.link}  /> : null
+              ):
+              Counter()
             }
         </div>
     </div>

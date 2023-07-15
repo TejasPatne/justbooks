@@ -36,11 +36,13 @@ const PopularBooks = () => {
       <div className='explore-sec'>
         <div className='subheading-1' id='popular-books'>Popular Books</div>
         <div className='books-sec'>
-          {bookList? bookList.map((book, index) =>
-            <BookCard key={index} coverimage={book.coverpage} bookname={book.name} author={book.author} edition={book.edition} booklink={book.link} />
-          ):
-          Counter()
-        }
+          {
+            bookList.length !== 0 ? 
+            bookList.map((book, index) =>
+              <BookCard key={index} coverimage={book.coverpage} bookname={book.name} author={book.author} edition={book.edition} booklink={book.link} />
+            ):
+            Counter()
+          }
         </div>
       </div>
     </div>
